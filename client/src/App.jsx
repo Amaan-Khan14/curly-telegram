@@ -1,34 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [backendMessage, setBackendMessage] = useState('')
+  const [pathMessage, setPathMessage] = useState('')
+
+  // Fetch messages from backend routes
+  useEffect(() => {
+    // Fetch root route message
+    fetch(`http://${process.env.BACKEND_URL}/`)
+      .then(response => response.text())
+      .then(data => setBackendMessage(data))
+      .catch(error => console.error('Error fetching root route:', error))
+
+    // Fetch /path route message
+    fetch(`http://${process.env.BACKEND_URL}/path`)
+      .then(response => response.text())
+      .then(data => setPathMessage(data))
+      .catch(error => console.error('Error fetching path route:', error))
+  }, [])
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
+    <div className="App">
+      <h1>Frontend-Backend Integration</h1>
+
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
+      <div className="backend-messages">
+        <h2>Backend Messages:</h2>
+        <h2>Root Route: {backendMessage}</h2>
+        <h2>Path Route: {pathMessage}</h2>
+      </div>
+    </div>
   )
 }
 
