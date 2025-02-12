@@ -8,7 +8,7 @@ function App() {
   // Fetch messages from backend routes
   useEffect(() => {
     // Fetch root route message
-    fetch(`http://${import.meta.env.VITE_BACKEND_URL}/`)
+    fetch(`https://${import.meta.env.VITE_BACKEND_URL}/`)
       .then(response => response.text())
       .then(data => setBackendMessage(data))
       .catch(error => console.error('Error fetching root route:', error))
