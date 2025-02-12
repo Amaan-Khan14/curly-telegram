@@ -14,7 +14,7 @@ function App() {
       .catch(error => console.error('Error fetching root route:', error))
 
     // Fetch /path route message
-    fetch(`http://${import.meta.env.VITE_BACKEND_URL}/path`)
+    fetch(`https://${import.meta.env.VITE_BACKEND_URL}/path`)
       .then(response => response.text())
       .then(data => setPathMessage(data))
       .catch(error => console.error('Error fetching path route:', error))
